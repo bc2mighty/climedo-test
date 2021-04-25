@@ -21,9 +21,9 @@ exports.department = async(req, res) => {
 
     try {
         id = req.params.id
-        console.log(req.params.id);
+        
         department = await Department.findById(id)
-        return res.status(200).json({message: "All Departments", department})
+        return res.status(200).json({message: "Department Details", department})
     } catch(err) {
         console.log(err);
         let message = typeof err === 'object' && err.hasOwnProperty('kind') && err.kind == "ObjectId" ? `Department ID Not Found` : `Something Went Wrong`
@@ -84,7 +84,6 @@ exports.update = async(req, res) => {
 
         id = req.body.id
         delete req.body['id']
-        console.log(id, req.body);
         
         department = await Department.findOneAndUpdate({_id: id}, req.body, {new: true})
         // department = Department.findById(id)
@@ -98,4 +97,18 @@ exports.update = async(req, res) => {
     }
 }
 
-exports.delete = async(req, res) => {}
+exports.delete = async(req, res) => {
+    let department
+    let id
+
+    try {
+        id = req.params.id
+        department = await Department.findOneAndDelete({_id: id})
+
+        return res.status(200).json({message: "Department Deleted Successfully", department})
+    } catch(err) {
+        console.log(err);
+        let message = typeof err === 'object' && err.hasOwnProperty('kind') && err.kind == "ObjectId" ? `Department ID Not Found` : `Something Went Wrong`
+        return res.status(422).json({message, error: err})
+    }
+}
