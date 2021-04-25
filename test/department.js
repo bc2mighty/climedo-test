@@ -1,6 +1,5 @@
 const expect = require('chai').expect
 const request = require('supertest')
-const app = require('../app')
 
 describe('Create Department', () => {
     it('Should Create Department or return error', (done) => {
