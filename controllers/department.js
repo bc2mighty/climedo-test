@@ -2,9 +2,34 @@ const Department = require("../model/department")
 
 const validator = require("../config/validator")
 
-exports.all = async(req, res) => {}
+exports.all = async(req, res) => {
+    let departments
 
-exports.department = async(req, res) => {}
+    try {
+        departments = await Department.find({})
+        return res.status(200).json({message: "All Departments", departments})
+    } catch(err) {
+        console.log(err);
+        let message = typeof err === 'object' && err.hasOwnProperty('code') && err.code == 11000 ? `Duplicate Fields` : `Something Went Wrong`
+        return res.status(422).json({message, error: err})
+    }
+}
+
+exports.department = async(req, res) => {
+    let department
+    let id
+
+    try {
+        id = req.params.id
+        console.log(req.params.id);
+        department = await Department.findById(id)
+        return res.status(200).json({message: "All Departments", department})
+    } catch(err) {
+        console.log(err);
+        let message = typeof err === 'object' && err.hasOwnProperty('kind') && err.kind == "ObjectId" ? `Department ID Not Found` : `Something Went Wrong`
+        return res.status(422).json({message, error: err})
+    }
+}
 
 exports.create = async(req, res) => {
     let department
