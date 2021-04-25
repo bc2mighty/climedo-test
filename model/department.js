@@ -6,7 +6,7 @@ const departmentSchema = new Schema({
         type: String,
         unique: true
     },
-    otherFields: Array,
+    otherFields: {},
     contactPerson: {
         name: String,
         email: {
@@ -14,7 +14,7 @@ const departmentSchema = new Schema({
             unique: true
         },
         telephone: Number,
-        otherFields: Array,
+        otherFields: {},
     },
 }, {
     timestamps: true

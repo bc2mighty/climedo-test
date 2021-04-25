@@ -23,6 +23,7 @@ exports.department = async(req, res) => {
         id = req.params.id
         
         department = await Department.findById(id)
+        if(!department) return res.status(422).json({message: "Department Does Not Exist"})
         return res.status(200).json({message: "Department Details", department})
     } catch(err) {
         console.log(err);
@@ -37,20 +38,20 @@ exports.create = async(req, res) => {
     try {
         let obj = {
             'title': `required|string`,
-            'otherFields': `required|array`,
-            'otherFields.*': 'required|object',
+            'otherFields': `required|object`,
+            'otherFields.*': 'required|string',
             'contactPerson': 'required|object',
             'contactPerson.name': 'required|string',
             'contactPerson.email': 'required|email',
             'contactPerson.telephone': 'required|phoneNumber',
-            'contactPerson.otherFields': 'required|array',
-            'contactPerson.otherFields.*': 'required|object',
+            'contactPerson.otherFields': 'required|object',
         }
 
         let valid = await validator.validate_request(req.body, obj)
         if(!valid.matched) return res.status(422).json({ message: validator.error_message(valid.errors), error: validator.pile_error_messages(valid.errors) })
         
         department = new Department(req.body)
+        if(!department) return res.status(422).json({message: "Department Does Not Exist"})
         await department.save()
 
         return res.status(200).json({message: "Department Created Successfully", department})
@@ -69,14 +70,12 @@ exports.update = async(req, res) => {
         let obj = {
             'id': `required|string`,
             'title': `required|string`,
-            'otherFields': `required|array`,
-            'otherFields.*': 'required|object',
+            'otherFields': `required|object`,
             'contactPerson': 'required|object',
             'contactPerson.name': 'required|string',
             'contactPerson.email': 'required|email',
             'contactPerson.telephone': 'required|phoneNumber',
-            'contactPerson.otherFields': 'required|array',
-            'contactPerson.otherFields.*': 'required|object',
+            'contactPerson.otherFields': 'required|object',
         }
 
         let valid = await validator.validate_request(req.body, obj)
@@ -86,8 +85,7 @@ exports.update = async(req, res) => {
         delete req.body['id']
         
         department = await Department.findOneAndUpdate({_id: id}, req.body, {new: true})
-        // department = Department.findById(id)
-        console.log(department)
+        if(!department) return res.status(422).json({message: "Department Does Not Exist"})
 
         return res.status(200).json({message: "Department Updated Successfully", department})
     } catch(err) {
@@ -104,6 +102,7 @@ exports.delete = async(req, res) => {
     try {
         id = req.params.id
         department = await Department.findOneAndDelete({_id: id})
+        if(!department) return res.status(422).json({message: "Department Does Not Exist"})
 
         return res.status(200).json({message: "Department Deleted Successfully", department})
     } catch(err) {
