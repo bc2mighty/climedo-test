@@ -2,7 +2,10 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const departmentSchema = new Schema({
-    title:  String,
+    title: {
+        type: String,
+        unique: true
+    },
     otherFields: Array,
     contactPerson: {
         name: String,
