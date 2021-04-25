@@ -12,4 +12,6 @@ router.put("/", Department.update)
 
 router.delete("/:id", Department.delete)
 
+router.post("/search", Department.search)
+
 module.exports = router;

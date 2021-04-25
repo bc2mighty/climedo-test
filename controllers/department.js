@@ -10,7 +10,7 @@ exports.all = async(req, res) => {
         return res.status(200).json({message: "All Departments", departments})
     } catch(err) {
         console.log(err);
-        let message = typeof err === 'object' && err.hasOwnProperty('code') && err.code == 11000 ? `Duplicate Fields` : `Something Went Wrong`
+        let message = `Something Went Wrong`
         return res.status(422).json({message, error: err})
     }
 }
@@ -108,6 +108,30 @@ exports.delete = async(req, res) => {
     } catch(err) {
         console.log(err);
         let message = typeof err === 'object' && err.hasOwnProperty('kind') && err.kind == "ObjectId" ? `Department ID Not Found` : `Something Went Wrong`
+        return res.status(422).json({message, error: err})
+    }
+}
+
+exports.search = async(req, res) => {
+    let departments
+
+    try {
+        let obj = {
+            'title': `required|string`,
+        }
+
+        let valid = await validator.validate_request(req.body, obj)
+        if(!valid.matched) return res.status(422).json({ message: validator.error_message(valid.errors), error: validator.pile_error_messages(valid.errors) })
+
+        let {title} = req.body
+        console.log(title);
+        
+        departments = await Department.find({title: { $regex: title, $options: 'i'}})
+
+        return res.status(200).json({message: "Departments", departments})
+    } catch(err) {
+        console.log(err);
+        let message = `Something Went Wrong`
         return res.status(422).json({message, error: err})
     }
 }
