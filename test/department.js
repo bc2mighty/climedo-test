@@ -93,7 +93,7 @@ describe('Get A Department', () => {
             .then((res) => {
                 const body = res.body
                 expect(body).to.contain.property('message')
-                expect(body).to.contain.property('dpt')
+                expect(body).to.contain.property('department')
                 expect(body.department).to.be.an('object')
                 expect('Content-Type', /json/)
                 expect(200)
