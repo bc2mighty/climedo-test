@@ -18,6 +18,7 @@ db.once('open', function() {
   console.log("Connected");
 });
 
+// Set the Route to Department
 const departmentRoute = require("./routes/department")
 app.use("/api/department", departmentRoute)
 

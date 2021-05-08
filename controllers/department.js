@@ -2,6 +2,7 @@ const Department = require("../model/department")
 
 const validator = require("../config/validator")
 
+// Get All Departments
 exports.all = async(req, res) => {
     let departments
 
@@ -15,6 +16,7 @@ exports.all = async(req, res) => {
     }
 }
 
+// Get A Department
 exports.department = async(req, res) => {
     let department
     let id
@@ -32,6 +34,7 @@ exports.department = async(req, res) => {
     }
 }
 
+// Create A Department
 exports.create = async(req, res) => {
     let department
 
@@ -62,6 +65,7 @@ exports.create = async(req, res) => {
     }
 }
 
+// Update A Department
 exports.update = async(req, res) => {
     let department
     let id
@@ -95,6 +99,7 @@ exports.update = async(req, res) => {
     }
 }
 
+// Delete A Department
 exports.delete = async(req, res) => {
     let department
     let id
@@ -112,6 +117,7 @@ exports.delete = async(req, res) => {
     }
 }
 
+// Search For A Department
 exports.search = async(req, res) => {
     let departments
 

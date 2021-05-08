@@ -1,5 +1,6 @@
 const { Validator } = require("node-input-validator");
 
+// Validate Department Requests
 exports.validate_request = async (body, obj) => {
     const v = new Validator(body, obj);
   
@@ -8,6 +9,7 @@ exports.validate_request = async (body, obj) => {
     return { matched, errors: v.errors };
 };
 
+// Turn Error Request to String
 exports.error_message = (errors) => {
     let message = `Validation Error: `
     Object.entries(errors).map(x => {
@@ -16,6 +18,7 @@ exports.error_message = (errors) => {
     return message.slice(0, parseInt(message.length) - 2).replace(/\./g, "")
 }
 
+// Return Error Requests
 exports.pile_error_messages = (errors) => {
     let error_messages = [];
     Object.entries(errors).map((x) => {

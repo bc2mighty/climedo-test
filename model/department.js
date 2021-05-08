@@ -20,4 +20,5 @@ const departmentSchema = new Schema({
     timestamps: true
 });
 
+// Export Department Schema
 module.exports = mongoose.model("Department", departmentSchema)
