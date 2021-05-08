@@ -15,7 +15,7 @@ app.use(express.json())
 
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
-  console.log("Connected");
+  console.log("Connected to db");
 });
 
 // Set the Route to Department
